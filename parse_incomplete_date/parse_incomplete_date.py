@@ -1,6 +1,5 @@
 from contextlib import suppress
 from datetime import datetime
-from datetime import timedelta
 from typing import Generator
 
 
@@ -10,6 +9,7 @@ def _find_possible_dates(
     for year in search_range:
         with suppress(ValueError):
             dt = datetime.strptime(f"{incomplete_dt} {year}", "%a %b %d %H:%M:%S %Y")
+
         date_in_future = dt > datetime.now()
         if not date_in_future:
             yield dt
@@ -22,7 +22,7 @@ def _weekdays_match(dt: datetime, incomplete_dt: str) -> bool:
 
 
 def parse_date_from_incomplete_string(incomplete_dt: str) -> datetime:
-    search_range = range(datetime.now().year, datetime.now().year - 12, -1)
+    search_range = range(datetime.now().year, datetime.now().year - 28, -1)
     candidate_dates = _find_possible_dates(search_range, incomplete_dt)
 
     while candidate_dates:
@@ -34,4 +34,4 @@ def parse_date_from_incomplete_string(incomplete_dt: str) -> datetime:
         if _weekdays_match(dt, incomplete_dt):
             return dt
 
-    return datetime.now() - timedelta(days=365 * 12)
+    raise ValueError("Impossible date")
