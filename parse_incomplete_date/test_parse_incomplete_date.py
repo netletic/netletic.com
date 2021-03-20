@@ -1,7 +1,7 @@
-import pytest
-
-from freezegun import freeze_time
 from datetime import datetime
+
+import pytest
+from freezegun import freeze_time
 
 from parse_incomplete_date import parse_date_from_incomplete_string
 
