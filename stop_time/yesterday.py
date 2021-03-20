@@ -1,0 +1,6 @@
+from datetime import datetime
+from datetime import timedelta
+
+
+def yesterday():
+    return datetime.today() - timedelta(days=1)
