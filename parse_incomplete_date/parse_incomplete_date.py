@@ -10,7 +10,7 @@ def _find_possible_dates(
         with suppress(ValueError):
             dt = datetime.strptime(f"{incomplete_dt} {year}", "%a %b %d %H:%M:%S %Y")
 
-        date_in_future = dt > datetime.now()
+        date_in_future = dt > datetime.today()
         if not date_in_future:
             yield dt
 
@@ -22,7 +22,8 @@ def _weekdays_match(dt: datetime, incomplete_dt: str) -> bool:
 
 
 def parse_date_from_incomplete_string(incomplete_dt: str) -> datetime:
-    search_range = range(datetime.now().year, datetime.now().year - 28, -1)
+    current_year = datetime.today().year
+    search_range = range(current_year, current_year - 28, -1)
     candidate_dates = _find_possible_dates(search_range, incomplete_dt)
 
     while candidate_dates:
