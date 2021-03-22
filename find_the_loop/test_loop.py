@@ -1,3 +1,4 @@
+import os
 from collections import Counter
 
 import pytest
@@ -5,14 +6,17 @@ from loop import delta
 from loop import get_rx_bytes
 
 
+DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 @pytest.fixture()
 def t2() -> Counter:
-    return get_rx_bytes("t2.txt")
+    return get_rx_bytes(os.path.join(DIR, "t2.txt"))
 
 
 @pytest.fixture()
 def t1() -> Counter:
-    return get_rx_bytes("t1.txt")
+    return get_rx_bytes(os.path.join(DIR, "t1.txt"))
 
 
 def test_delta(t1: Counter, t2: Counter):
