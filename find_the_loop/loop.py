@@ -1,5 +1,7 @@
 from collections import Counter
 from pprint import pprint
+from typing import List
+from typing import Tuple
 
 
 def get_rx_bytes(filename: str) -> Counter:
@@ -16,7 +18,7 @@ def get_rx_bytes(filename: str) -> Counter:
     return Counter(rx)
 
 
-def delta(t1: Counter, t2: Counter) -> list[tuple[str, int]]:
+def delta(t1: Counter, t2: Counter) -> List[Tuple[str, int]]:
     return (t2 - t1).most_common(5)
 
 
