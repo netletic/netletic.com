@@ -11,8 +11,7 @@ def get_rx_bytes(filename: str) -> Counter:
                 continue
             if "Bytes Received" in line:
                 _, bytes_rx, *_ = line.split(":")
-                bytes_rx = bytes_rx.replace(", Unicast Frames ", "")
-                bytes_rx = bytes_rx.lstrip()
+                bytes_rx = bytes_rx.replace(", Unicast Frames ", "").lstrip()
                 rx[port] = int(bytes_rx)
     return Counter(rx)
 
