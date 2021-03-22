@@ -26,12 +26,7 @@ def parse_date_from_incomplete_string(incomplete_dt: str) -> datetime:
     search_range = range(current_year, current_year - 28, -1)
     candidate_dates = _find_possible_dates(search_range, incomplete_dt)
 
-    while candidate_dates:
-        try:
-            dt = next(candidate_dates)
-        except StopIteration:
-            break
-
+    for dt in candidate_dates:
         if _weekdays_match(dt, incomplete_dt):
             return dt
 
