@@ -1,3 +1,4 @@
+import re
 from collections import Counter
 from pathlib import Path
 from pprint import pprint
@@ -21,15 +22,13 @@ if not t2_file.exists():
 
 
 def get_rx_bytes(file: Path) -> Counter:
-    rx = {}
     with open(file) as fp:
-        for line in fp.readlines():
-            if "Chassis/Slot/Port" in line:
-                _, port, _ = line.split()
-            elif "Bytes Received" in line:
-                _, bytes_rx, *_ = line.split(":")
-                bytes_rx = bytes_rx.replace(", Unicast Frames ", "").lstrip()
-                rx[port] = int(bytes_rx)
+        pattern = re.compile(
+            r"Chassis/Slot/Port\s(\d+/\d+/\d+).*?Bytes Received  :\s*(\d{1,})",
+            re.DOTALL,
+        )
+        matches = re.findall(pattern, fp.read())
+        rx = {port: int(bytes_rx) for port, bytes_rx in matches}
     return Counter(rx)
 
 
