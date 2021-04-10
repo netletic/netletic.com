@@ -26,7 +26,6 @@ def get_rx_bytes(file: Path) -> Counter:
         for line in fp.readlines():
             if "Chassis/Slot/Port" in line:
                 _, port, _ = line.split()
-                continue
             elif "Bytes Received" in line:
                 _, bytes_rx, *_ = line.split(":")
                 bytes_rx = bytes_rx.replace(", Unicast Frames ", "").lstrip()
