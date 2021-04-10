@@ -2,17 +2,15 @@ from collections import Counter
 from pathlib import Path
 from pprint import pprint
 from typing import List
+from typing import Optional
 from typing import Tuple
 from urllib.request import urlretrieve
 
 
 tmp = Path("/tmp")
-t1_url = (
-    "https://raw.githubusercontent.com/netletic/netletic.com/main/find_the_loop/t1.txt"
-)
-t2_url = (
-    "https://raw.githubusercontent.com/netletic/netletic.com/main/find_the_loop/t2.txt"
-)
+github = "https://raw.githubusercontent.com"
+t1_url = f"{github}/netletic/netletic.com/main/find_the_loop/t1.txt"
+t2_url = f"{github}/netletic/netletic.com/main/find_the_loop/t2.txt"
 t1_file = tmp / "t1.txt"
 t2_file = tmp / "t2.txt"
 
@@ -36,8 +34,8 @@ def get_rx_bytes(file: Path) -> Counter:
     return Counter(rx)
 
 
-def delta(t1: Counter, t2: Counter) -> List[Tuple[str, int]]:
-    return (t2 - t1).most_common(5)
+def delta(t1: Counter, t2: Counter, limit: Optional[int] = 5) -> List[Tuple[str, int]]:
+    return (t2 - t1).most_common(limit)
 
 
 def main() -> int:
