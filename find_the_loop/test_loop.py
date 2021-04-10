@@ -1,22 +1,20 @@
-import os
 from collections import Counter
 
 import pytest
 from loop import delta
 from loop import get_rx_bytes
+from loop import t1_file
+from loop import t2_file
 
 
-DIR = os.path.dirname(os.path.abspath(__file__))
-
-
-@pytest.fixture()
-def t2() -> Counter:
-    return get_rx_bytes(os.path.join(DIR, "t2.txt"))
-
-
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def t1() -> Counter:
-    return get_rx_bytes(os.path.join(DIR, "t1.txt"))
+    return get_rx_bytes(t1_file)
+
+
+@pytest.fixture(scope="session")
+def t2() -> Counter:
+    return get_rx_bytes(t2_file)
 
 
 def test_delta(t1: Counter, t2: Counter):
